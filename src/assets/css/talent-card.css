@@ -1,0 +1,54 @@
+.talent-card{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px 15px;
+}
+
+.talent-card > *:not(:last-child){
+    margin-bottom: 10px;
+}
+
+.talent-card .talent-readmore a{
+    display: inline-block;
+}
+
+
+.talent-card [class^="talent-bio"]{
+    color: #152346;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.talent-card .talent-type, .talent-card .talent-age{
+    font-size: 13px;
+    font-weight: 500;
+    color: #031526;
+}
+
+.talent-card .talent-name{
+    font-size: 18px;
+    color: #AC0265;
+    font-weight: 700;
+}
+
+.talent-card .talent-image{
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    overflow: hidden; 
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.talent-card .talent-image img{
+    position: absolute;
+    top: 0;
+    height: 100px;
+}

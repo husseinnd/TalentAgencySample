@@ -1,0 +1,45 @@
+@import "../css/talent-card.css";
+
+
+.home-background-section {
+    background-image: url(../img/home-bg.jpg);
+    height: 95vh;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.home-background-section >*{
+    margin: 10px 0;
+}
+
+.home-background-section .logo-div{
+    background-color: #44D5EB;
+    border-radius: 10px;   
+}
+
+.home-background-section .logo-div img{
+    width: 130px;
+    padding: 10px;
+}
+
+.home-background-section h1{  
+    font-size: 70px;
+    color: whitesmoke;
+}
+
+.home-filter-talent button{
+    outline: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    border: unset;
+    background-color: #007CBC ;
+}
+
+.home-filter-talent button:hover, 
+.home-filter-talent button:focus{ 
+    background-color: #AC0265 ;
+}
