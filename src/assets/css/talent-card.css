@@ -5,6 +5,15 @@
     background-color: white;
     border-radius: 10px;
     padding: 20px 15px;
+    transition: all 0.3s;
+    transform: scale(1);
+}
+
+.talent-card.talent-readmore {
+    transform: scale(1.15);
+    box-shadow: 1px 1px 30px #AC0265;
+    position: absolute;
+    z-index: 1;
 }
 
 .talent-card > *:not(:last-child){
@@ -19,6 +28,7 @@
 .talent-card [class^="talent-bio"]{
     color: #152346;
     font-weight: 500;
+    min-height: 45px;
     font-size: 15px;
 }
 

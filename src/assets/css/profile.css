@@ -1,0 +1,68 @@
+.profile-section{
+    padding-top: 54px;
+}
+
+.profile-section input, .profile-section textarea{
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+
+.profile-left-section, .profile-right-section{
+    padding: 60px 0;
+}
+
+.profile-left-section{
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+}
+
+.profile-email {
+    color: #152346;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.profile-image-uploader {
+    overflow: hidden;
+    border-radius: 50%;
+    width: 250px;
+    height: 250px;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+}
+
+.profile-image-uploader input[type="file"]{
+    position: absolute;
+    z-index: 1;
+    width: 250px;
+    height: 250px;
+    cursor: pointer;
+    opacity: 0;
+    top: 0;
+    left: 0;
+}
+
+.profile-image-uploader img{
+    height: 100%;
+    position: absolute;
+    z-index: 0;
+}
+
+.profile-image-uploader:hover {
+    filter: contrast(0.5);
+}
+
+.profile-right-section {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.profile-right-section textarea{  min-height: 110px;}

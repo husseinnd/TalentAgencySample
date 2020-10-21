@@ -1,0 +1,40 @@
+.header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 0;
+    padding: 10px 30px;
+    background: rgba(255,255,255, 0.4);
+}
+
+.header .header-img {
+
+}
+
+.header .header-logo .header-logo-img{
+    width: 50%;
+}
+
+.header-links {
+    display: flex;
+    align-items: center;
+}
+
+.header-links > a {
+    margin: 0 10px;
+    text-decoration: none !important;
+    display: flex;
+    align-items: center;
+    color: #014883;
+    transition: color 0.3s;
+    font-weight: 500;
+}
+
+.header-links > a:hover {
+    color: #AC0265;
+}
+
+.header-links > a svg {
+    margin-right: 5px;
+}
