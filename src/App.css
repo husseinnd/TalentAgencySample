@@ -1,6 +1,7 @@
 @import '../node_modules/bootstrap/dist/css/bootstrap.css';
 @import './assets/css/header.css';
 @import './assets/css/footer.css';
+@import './assets/css/login-signup.css';
 @import './assets/css/home.css';
 @import './assets/css/profile.css';
 
@@ -8,8 +9,14 @@ body{
     background-color: #BFDEEE;
 }
 
-.btn-style{
+a{ color: #AC0265;}
+a:hover{ color: #007CBC;}
+
+a, a:hover {
     text-decoration: none;
+}
+
+.btn-style{
     padding: 15px 25px;
     background-color: #007CBC ;
     transition: background-color 0.3s;
@@ -24,7 +31,6 @@ body{
 
 
 .btn-style:hover{
-    text-decoration: none;
     background-color: #AC0265 ;
     color: white;
 }

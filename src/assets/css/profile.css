@@ -13,7 +13,6 @@
 }
 
 .profile-left-section{
-    background-color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -61,6 +60,7 @@
 }
 
 .profile-right-section {
+    background-color: #fff;
     padding-left: 20px;
     padding-right: 20px;
 }

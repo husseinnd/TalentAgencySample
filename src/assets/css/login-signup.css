@@ -1,0 +1,30 @@
+[aria-labelledby="login-modal"] .modal-header,
+[aria-labelledby="signup-modal"] .modal-header
+{
+    border: unset;
+}
+
+[aria-labelledby="login-modal"] .modal-header .modal-title,
+[aria-labelledby="signup-modal"] .modal-header .modal-title
+{
+    text-align: center;
+    width: 100%;
+}
+
+[aria-labelledby="login-modal"] .modal-header img,
+[aria-labelledby="signup-modal"] .modal-header img {
+    width: 200px;
+}
+
+[aria-labelledby="login-modal"] .modal-body .btn-style,
+[aria-labelledby="signup-modal"] .modal-body .btn-style {
+    display: inline-block;
+}
+
+.have-account{
+    font-size: 13px;
+    color: #152346;
+}
+.have-account a {
+    font-weight: 500;
+}

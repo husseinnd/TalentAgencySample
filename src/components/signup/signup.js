@@ -3,8 +3,7 @@ import {Modal} from 'react-bootstrap';
 import logo from '../../assets/img/logo.png';
 import {InputGroup, FormControl} from 'react-bootstrap';
 import { Container, Row, Col } from 'react-bootstrap';
-import { BoxArrowInRight, EnvelopeFill, LockFill} from 'react-bootstrap-icons';
-import Signup from "../signup/signup";
+import { BoxArrowInRight, EnvelopeFill, LockFill, PersonFill} from 'react-bootstrap-icons';
 
 function ModalRender(props) {
     const renderInput = (icon, placeholder, label, id, val="", type="text") => {
@@ -36,10 +35,11 @@ function ModalRender(props) {
         </Modal.Header>
         <Modal.Body>
            <Container>
+               <Row><Col>{renderInput(<PersonFill/>, "First name", "First name", 'fname-input', "")}</Col></Row>
+               <Row><Col>{renderInput(<PersonFill/>, "Last name", "Last name", 'lname-input', "")}</Col></Row>
                <Row><Col>{renderInput(<EnvelopeFill/>, "Email", "Email", 'email-input', "", "email")}</Col></Row>
                <Row><Col>{renderInput(<LockFill/>, "Password", "Password", 'pass-input', "", "password")}</Col></Row>
-               <Row><Col className="text-center mb-2"><a href="/#" className="btn-style btn-style-sm">Login</a></Col></Row>
-               <Row><Col className="text-center have-account">Don't have an account? <Signup /></Col></Row>
+               <Row><Col className="text-center mb-2"><a href="/#" className="btn-style btn-style-sm">Sign Up</a></Col></Row>
            </Container>
         </Modal.Body>
         </Modal>
@@ -51,8 +51,8 @@ function Login() {
   
     return (
       <>
-        <a className="header-login-link" href="/#" onClick={(e) => {e.preventDefault(); setModalShow(true);}}>
-            <BoxArrowInRight/> Login
+        <a className="signup-link" href="/#" onClick={(e) => {e.preventDefault(); setModalShow(true);}}>
+          Sign Up
         </a>
   
         <ModalRender

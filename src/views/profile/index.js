@@ -105,8 +105,8 @@ class Profile extends React.Component{
     render() {
         return <div className="profile-section"> 
             <Row className="mx-0">
-                <Col sm={4} className="px-0">{this.renderLeftSection()}</Col>
-                <Col sm={8}>{this.renderRightSection()}</Col>
+                <Col sm={4}>{this.renderLeftSection()}</Col>
+                <Col sm={8} className="px-0">{this.renderRightSection()}</Col>
             </Row>
         </div>;
     }  
