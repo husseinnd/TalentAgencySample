@@ -32,6 +32,18 @@ class Login extends React.Component {
       userApi.login(data)
       .then((res) => {
         userApi.signupLoginCallback(res.data.data)
+      })
+      .catch((res) => {
+        this.refs.loginsignup.notificationAlert({
+          place: 'tc',
+          message: (
+              <div>
+                  <ExclamationCircleFill/> {res.response.data.message}
+              </div>
+          ),
+          type: "danger",
+          autoDismiss: 3
+        });
       });
     }
 
