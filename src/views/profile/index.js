@@ -68,8 +68,6 @@ class Profile extends React.Component{
 
     uploadImg = (event) => {
         let image = event.target.files;
-        console.log('image');
-        console.log(image);
         let fd = new FormData();
         fd.append("userImg", image[0]);
         userApi.uploadPic(fd)
