@@ -66,13 +66,30 @@ class Profile extends React.Component{
       </InputGroup>;
     }
 
+    uploadImg = (event) => {
+        let image = event.target.files;
+        console.log('image');
+        console.log(image);
+        let fd = new FormData();
+        fd.append("userImg", image[0]);
+        userApi.uploadPic(fd)
+        .then((res) => {
+            this.setState({
+                data: {
+                    ...this.state.data,
+                    img: res.data.img
+                }
+            });
+        });
+    }
+
     renderLeftSection = () => {
         const {img, email} = this.state.data;
         return <div className="profile-left-section">
-            <div className="profile-image-uploader margin-btm-30">
-                <img src={img? img : Avatar} alt="profile" />
-                <input type="file" />
-            </div>
+            <form className="profile-image-uploader margin-btm-30" enctype="multipart/form-data">
+                <img src={img? userApi.appUrl + img : Avatar} alt="profile" />
+                <input type="file" name="userImg" onChange={this.uploadImg}/>
+            </form>
             <div className="profile-email">{email}</div>
         </div>
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import Avatar from "../../assets/img/avatar.png";
-
+import userApi from "../../api/user";
 
 class TalentCard extends React.Component{
 
@@ -23,7 +23,7 @@ class TalentCard extends React.Component{
         const isBioLong = bio && bio.length > 43;
         return <div className={`talent-card ${(isReadMore)? "talent-readmore" : ""}`}>
             <div className="talent-image">
-                <img src={img? img : Avatar} alt="talent"/>
+                <img src={img? userApi.appUrl + img : Avatar} alt="talent"/>
             </div>
             <div className="talent-name">{name}</div>
             <div className="talent-type">{talents}</div>

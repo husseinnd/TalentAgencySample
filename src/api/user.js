@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 class User {
-    baseUrl = 'http://127.0.0.1:8000/api/users';
+    appUrl = 'http://127.0.0.1:8000';
+    baseUrl = this.appUrl + '/api/users';
 
     signup = async (data) => {
         return await axios.post(this.baseUrl, data);
@@ -40,6 +41,10 @@ class User {
 
     update = async (data) => {
         return await axios.put(this.baseUrl + '/' + localStorage.getItem('agency-uid'), data);
+    }
+
+    uploadPic = async (formData) => {
+        return await axios.post(this.baseUrl + '/pic', formData);
     }
 }
 
