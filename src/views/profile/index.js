@@ -3,31 +3,51 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import {InputGroup, FormControl} from 'react-bootstrap';
 import Avatar from "../../assets/img/avatar.png";
-import { PersonFill, PhoneFill, Calendar3, FilePersonFill } from 'react-bootstrap-icons';
+import { PersonFill, PhoneFill, Calendar3, FilePersonFill, Check2, ExclamationCircleFill} from 'react-bootstrap-icons';
 import Select from 'react-select';
+import talentApi from '../../api/talent';
+import userApi from '../../api/user';
+import NotificationAlert from "react-notification-alert";
+
 
 class Profile extends React.Component{
     constructor (props){
         super(props);
-        this.options = [
-            { value: 'singer', label: 'singer' },
-            { value: 'actor', label: 'actor' },
-            { value: 'director', label: 'director' }
-        ];
-
+        
         this.state = {
-           data: {
-            id: 1,
-            firstName: 'Fadi',
-            lastName: 'Majed',
-            type: 'Actor',
-            age: "28",
-            bio: "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
-            img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
-            email: 'blabla@gmail.com',
-            phone: "876543"
-           }
-        };
+            talentOptions: null,
+            data: {},
+            selectedTalent: null
+        }
+
+        talentApi.list()
+        .then((res)=>{
+            // mapping the response to how the select fields needs them to be
+            const talentOptions = res.data.map((obj) => {
+                return {label: obj.label, value: obj.label}
+            });   
+            this.setState({talentOptions});
+        });
+
+        userApi.show()
+        .then((res) => {
+            this.setState({
+                data: res.data, 
+                selectedTalent: {
+                    label: res.data.talents,
+                    value: res.data.talents
+                }
+            });
+        });
+    }
+
+    onInputChange = (e, inputId) => {
+        this.setState({
+          data: {
+            ...this.state.data,
+            [inputId]: e.target.value
+          }
+        })
     }
 
     renderInput = (icon, placeholder, label, id, val="", type="text") => {
@@ -36,6 +56,7 @@ class Profile extends React.Component{
           <InputGroup.Text id={id}>{icon}</InputGroup.Text>
         </InputGroup.Prepend>
         <FormControl
+          onChange={(e) => {this.onInputChange(e, id);}}
           value={val}
           type={type}
           placeholder={placeholder}
@@ -56,33 +77,85 @@ class Profile extends React.Component{
         </div>
     }
 
+    setTalent = (selectedTalent) => {
+        this.setState({
+            selectedTalent,
+            data: {
+                ...this.state.data,
+                talents: selectedTalent.label
+            }
+        });
+    }
+
+    isValid = (data) => {
+        if(data.firstName && data.lastName) return true;
+
+        this.refs.notify.notificationAlert({
+            place: 'tc',
+            message: (
+                <div>
+                    <ExclamationCircleFill/> Fill all the required fields
+                </div>
+            ),
+            type: "danger",
+            autoDismiss: 3
+        });
+        return false;
+    }
+
+    submit = (e) => {
+        e.preventDefault();
+        const {data} = this.state;
+
+        if(! this.isValid(data)) return;
+
+        userApi.update(data)
+        .then((res) => {
+            this.refs.notify.notificationAlert({
+                place: 'tc',
+                message: (
+                    <div>
+                        <Check2 /> Saved successfully!
+                    </div>
+                ),
+                type: "success",
+                autoDismiss: 3
+            });
+        });
+    }
+
     renderRightSection = () => {
         const {firstName, lastName, phone, age, bio} = this.state.data;
         return <div className="profile-right-section">
             <Container>
                 <Row>   
                     <Col>
-                        {this.renderInput(<PersonFill />, "First Name", "First Name", 'first-name-input', firstName)}
+                        {this.renderInput(<PersonFill />, "First Name *", "First Name", 'firstName', firstName)}
                     </Col> 
                 </Row>
                 <Row>   
                     <Col>
-                        {this.renderInput(<PersonFill />, "Last Name", "Last Name", 'last-name-input', lastName)}
+                        {this.renderInput(<PersonFill />, "Last Name *", "Last Name", 'lastName', lastName)}
                     </Col>                 
                 </Row>
                 <Row>   
                     <Col>
-                        {this.renderInput(<PhoneFill />, "Number", "Number", 'nb-input', phone, 'number')}
+                        {this.renderInput(<PhoneFill />, "Number", "Number", 'phone', phone, 'number')}
                     </Col>  
                 </Row>   
                 <Row>   
                     <Col>
-                        {this.renderInput(<Calendar3 />, "Age", "Age", 'age-input', age, 'number')}
+                        {this.renderInput(<Calendar3 />, "Age", "Age", 'age', age, 'number')}
                     </Col>  
                 </Row> 
                 <Row>
                     <Col className="mb-3">
-                        <Select options={this.options} placeholder="Talent Type" isMulti={true}/>
+                        <Select 
+                            options={this.state.talentOptions} 
+                            placeholder="Talent Type" 
+                            value={this.state.selectedTalent}
+                            onChange={this.setTalent}
+                        />
                     </Col>                 
                 </Row>
                 <Row>  
@@ -91,12 +164,12 @@ class Profile extends React.Component{
                             <InputGroup.Prepend>
                             <InputGroup.Text><FilePersonFill/></InputGroup.Text>
                             </InputGroup.Prepend>
-                            <FormControl as="textarea" aria-label="Tell us about yourself!" value={bio} />
+                            <FormControl as="textarea" aria-label="Tell us about yourself!" value={bio}  onChange={(e) => {this.onInputChange(e, 'bio');}}/>
                         </InputGroup>
                     </Col>                 
                 </Row>
                 <Row>   
-                    <Col><button className="btn btn-style btn-style-sm mt-3">Save</button></Col>                 
+                    <Col><button className="btn btn-style btn-style-sm mt-3" onClick={this.submit}>Save</button></Col>                 
                 </Row>
             </Container>
         </div>;
@@ -104,6 +177,7 @@ class Profile extends React.Component{
 
     render() {
         return <div className="profile-section"> 
+            <NotificationAlert ref="notify" />
             <Row className="mx-0">
                 <Col sm={4}>{this.renderLeftSection()}</Col>
                 <Col sm={8} className="px-0">{this.renderRightSection()}</Col>

@@ -4,46 +4,46 @@ import {DropdownButton, Dropdown} from 'react-bootstrap';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 import TalentCard from './../../components/talent-card/talent-card';
 import { Container, Row, Col } from 'react-bootstrap';
+import userApi from "../../api/user";
+import talentApi from "../../api/talent";
 
 class Home extends React.Component{
 
     constructor (props){
         super(props);
-        this.talents = [
-            {
-                id: 1,
-                name: 'F. Majed',
-                type: 'Actor',
-                age: "28",
-                bio: "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
-                img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-            },            
-            {
-                id: 1,
-                name: 'F. Majed',
-                type: 'Actor',
-                age: "28",
-                bio: "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
-                img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-            },            
-            {
-                id: 1,
-                name: 'F. Majed',
-                type: 'Actor',
-                age: "28",
-                bio: "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
-                img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-            },
-            {
-                id: 1,
-                name: 'F. Majed',
-                type: 'Actor',
-                age: "28",
-                bio: "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
-                img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-            }           
-        ];
+
+        this.state = {
+            talentSelected: null,
+            talentOptions: [],
+            profiles: []
+        };
+
+        talentApi.list()
+        .then((res) => {
+            const talentOptions = res.data.map((obj) => {
+                return obj.label
+            });   
+            this.setState({talentOptions});
+        });
+
+        this.getProfiles();
     }
+
+    getProfiles = (talentSelected = null) => {
+        userApi.listFilterByTalent(talentSelected)
+        .then((res) => {
+            this.setState({profiles: res.data});
+        });
+    }
+
+    filterTalents = (e, talentSelected) => {
+        e.preventDefault();
+        // set the talent selected
+        this.setState({talentSelected});
+        // filter the talents selected
+        this.getProfiles(talentSelected);
+    }
+
     renderBackgroundSection = () => {
         return <div className="home-background-section">
             <div className="logo-div">
@@ -54,11 +54,21 @@ class Home extends React.Component{
         </div>;
     }
 
-    renderTalents = () => {
-
-        return this.talents.map((talent, ind)=>{
-            return <Col key={talent.id+'-'+talent.name+'-'+ind} sm={3} className="margin-btm-30"> <TalentCard talent={talent} /> </Col>
+    renderProfiles = () => {
+        const {profiles} = this.state;
+        return profiles.map((profile, ind)=>{
+            return <Col key={profile.id+'-'+profile.name+'-'+ind} sm={3} className="margin-btm-30"> <TalentCard talent={profile} /> </Col>
         });
+    }
+
+    renderTalentsDropdown = () => {
+        const {talentOptions, talentSelected} = this.state;
+        return <DropdownButton className="margin-btm-30 home-filter-talent" title={(!talentSelected)? "Filter talents": "Filtered by: " + talentSelected}>
+            <Dropdown.Item href="/#" onClick={(e) => {this.filterTalents(e, null)}}>All</Dropdown.Item>
+            {talentOptions.map((talent, index) => {
+                return <Dropdown.Item key={talent+'-'+index} href="/#" onClick={(e) => {this.filterTalents(e, talent)}}>{talent}</Dropdown.Item>
+            })}
+        </DropdownButton>;
     }
 
     renderSearchSection = () => {
@@ -66,16 +76,13 @@ class Home extends React.Component{
             <Container>
                 <Row>
                     <Col>
-                        <DropdownButton className="margin-btm-30 home-filter-talent" title="Filter talents">
-                            <Dropdown.Item href="#/action-1">Singer</Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">Actor</Dropdown.Item>
-                        </DropdownButton>
+                        {this.renderTalentsDropdown()}
                     </Col>
                 </Row>
                     
                 
                 <Row>
-                    {this.renderTalents()}
+                    {this.renderProfiles()}
                 </Row>
             </Container>
             

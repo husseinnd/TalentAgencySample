@@ -1,4 +1,6 @@
 @import '../node_modules/bootstrap/dist/css/bootstrap.css';
+@import '../node_modules/react-notification-alert/dist/animate.css';
+
 @import './assets/css/header.css';
 @import './assets/css/footer.css';
 @import './assets/css/login-signup.css';
@@ -41,4 +43,10 @@ a, a:hover {
 
 .margin-btm-30{ 
     margin-bottom: 30px;
+}
+
+.alert-success {
+    color: #fff;
+    background-color: #449556;
+    border-color: unset;
 }

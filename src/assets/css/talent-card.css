@@ -20,6 +20,10 @@
     margin-bottom: 10px;
 }
 
+.talent-card .talent-readmore {
+    min-height: 37px;
+}
+
 .talent-card .talent-readmore a{
     display: inline-block;
 }
@@ -38,10 +42,20 @@
     color: #031526;
 }
 
+.talent-card .talent-type{
+    min-height: 19.5px;
+    color: #007CBC;
+}
+
+
 .talent-card .talent-name{
     font-size: 18px;
     color: #AC0265;
     font-weight: 700;
+}
+
+.talent-card .talent-name span{
+    text-transform: capitalize;
 }
 
 .talent-card .talent-image{
